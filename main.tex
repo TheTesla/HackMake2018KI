@@ -1,0 +1,331 @@
+% Copyright 2004 by Till Tantau <tantau@users.sourceforge.net>.
+%
+% In principle, this file can be redistributed and/or modified under
+% the terms of the GNU Public License, version 2.
+%
+% However, this file is supposed to be a template to be modified
+% for your own needs. For this reason, if you use this file as a
+% template and not specifically distribute it as part of a another
+% package/program, I grant the extra permission to freely copy and
+% modify this file as you see fit and even to delete this copyright
+% notice. 
+
+\documentclass{beamer}
+\usepackage[ngerman]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{graphics}
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\usepackage[decimalsymbol=comma]{siunitx}
+\usepackage{amsmath}
+\usepackage{ziffer}
+\usepackage{scrextend}
+\usepackage{color, colortbl}
+
+% There are many different themes available for Beamer. A comprehensive
+% list with examples is given here:
+% http://deic.uab.es/~iblanes/beamer_gallery/index_by_theme.html
+% You can uncomment the themes below if you would like to use a different
+% one:
+%\usetheme{AnnArbor}
+%\usetheme{Antibes}
+%\usetheme{Bergen}
+%\usetheme{Berkeley}
+%\usetheme{Berlin}
+%\usetheme{Boadilla}
+%\usetheme{boxes}
+%\usetheme{CambridgeUS}
+%\usetheme{Copenhagen}
+%\usetheme{Darmstadt}
+%\usetheme{default}
+%\usetheme{Frankfurt}
+%\usetheme{Goettingen}
+%\usetheme{Hannover}
+%\usetheme{Ilmenau}
+%\usetheme{JuanLesPins}
+%\usetheme{Luebeck}
+%\usetheme{Madrid}
+%\usetheme{Malmoe}
+%\usetheme{Marburg}
+%\usetheme{Montpellier}
+%\usetheme{PaloAlto}
+\usetheme{Pittsburgh}
+%\usetheme{Rochester}
+%\usetheme{Singapore}
+%\usetheme{Szeged}
+%\usetheme{Warsaw}
+
+\newcommand*\conj[1]{\overline{#1}}
+\newcommand*\oo{\infty}
+
+\definecolor{tucinfo}{rgb}{0.49,0.6,0.16}
+\definecolor{LightCyan}{rgb}{0.88,1,1}
+
+\setbeamercolor{title}{fg=blue}
+\setbeamercolor{structure}{fg=blue}
+
+
+\title{Künstliche Intelligenz -- Wie geht das denn?}
+
+% A subtitle is optional and this may be deleted
+\subtitle{Methoden und Komponenten am Beispiel der Bildverarbeitung}
+
+\author{Stefan Helmert}
+% - Give the names in the same order as the appear in the paper.
+% - Use the \inst{?} command only if the authors have different
+%   affiliation.
+
+\institute[TU Chemnitz] % (optional, but mostly needed)
+{
+  TU Chemnitz -- Professorship of Computer Graphics and Visualization
+  
+}
+
+\institute[Chaostreff Chemnitz] % (optional, but mostly needed)
+{
+	Chaostreff Chemnitz e.V.
+	
+}
+
+% - Use the \inst command only if there are several affiliations.
+% - Keep it simple, no one is interested in your street address.
+
+%\date{24.06.2017}
+%\date{13th September 2018}
+% - Either use conference name or its abbreviation.
+% - Not really informative to the audience, more for people (including
+%   yourself) who are reading the slides online
+
+\subject{Bildverarbeitung}
+% This is only inserted into the PDF information catalog. Can be left
+% out. 
+
+% If you have a file called "university-logo-filename.xxx", where xxx
+% is a graphic format that can be processed by latex or pdflatex,
+% resp., then you can add a logo as follows:
+
+% \pgfdeclareimage[height=0.5cm]{university-logo}{university-logo-filename}
+% \logo{\pgfuseimage{university-logo}}
+
+% Delete this, if you do not want the table of contents to pop up at
+% the beginning of each subsection:
+%\AtBeginSubsection[]
+%{
+%  \begin{frame}<beamer>{Inhalt}
+%    \tableofcontents[currentsection,currentsubsection]
+%  \end{frame}
+%}
+
+% Let's get started
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Inhalt}
+  \tableofcontents
+  % You might wish to add the option [pausesections]
+\end{frame}
+
+% Section and subsections will appear in the presentation overview
+% and table of contents.
+\pagenumbering{arabic}
+
+\section{Was wollen wir?}
+\subsection{Anwendungen}
+\begin{frame}{\insertsection}{\insertsubsection}
+\begin{itemize}
+	\item Bildersuche
+	\item Suche in Videos
+	\item Klassifikation von Mediendaten
+	\item Analyse der Wirkung und Stimmung von Medien
+	\item Verbesserung
+	\begin{itemize}
+		\item Monochrom $\rightarrow$ Farbe
+		\item SD $\rightarrow$ HD
+	\end{itemize}
+	\item Erstellung neuer Inhalte
+\end{itemize}
+\end{frame}
+
+\subsection{Autonomie}
+\begin{frame}{\insertsection}{\insertsubsection}
+	\begin{itemize}
+		\item Lernen statt Programmieren
+		\item Keine (einschränkenden) Vorgaben
+		\item Funktion ohne Vorwissen
+		\item Eigenständige Verbesserung
+		\item Effizienz
+	\end{itemize}
+\end{frame}
+
+\section{Umsetzung}
+\subsection{Da gibt es doch was auf Github}
+\begin{frame}{\insertsection}{\insertsubsection}
+	\begin{tikzpicture}[
+	roundnode/.style={circle, draw=green!60, fill=green!5, very thick, minimum size=7mm},
+	squarednode/.style={rectangle, draw=red!60, fill=red!5, very thick, minimum size=5mm},
+	]
+	%Nodes
+	\node[roundnode]   (in)                        {\shortstack{Eingabedaten}};
+	\node[squarednode] (ki)    [right=of in]       {KI};
+	\node[roundnode]   (label) [right=of ki] {\shortstack{Ergebnis}};
+	%Lines
+	\draw[->] (in.east) --  (ki.west);
+	\draw[->] (ki.east) --  (label.west);
+
+	\end{tikzpicture}
+\end{frame}
+
+\subsection{Überwachtes Lernen}
+\begin{frame}{\insertsection}{\insertsubsection}
+\begin{tikzpicture}[
+roundnode/.style={circle, draw=green!60, fill=green!5, very thick, minimum size=7mm},
+squarednode/.style={rectangle, draw=red!60, fill=red!5, very thick, minimum size=5mm},
+]
+%Nodes
+\node[roundnode]   (in)                        {\shortstack{bekannte \\ Rohdaten}};
+\node[roundnode]   (label) [above=of in] {\shortstack{erwartete \\ Ausgabe}};
+\node[squarednode] (ki)    [right=of in]       {KI};
+\node[squarednode] (eq)    [above right=of ki] {=};
+
+%Lines
+\draw[->] (label.east) .. controls +(right:30mm) and +(up:10mm) .. (eq.north);
+\draw[->] (in.east) --                                             (ki.west);
+\draw[->] (ki.east) .. controls +(right:10mm) and +(down:10mm) ..  (eq.south);
+\draw[->] (eq.west) .. controls +(left:10mm) and +(up:10mm) ..     (ki.north) node[midway,sloped] {\shortstack{update\bigskip}} ;
+\end{tikzpicture}
+\end{frame}
+
+\subsection{Unüberwachtes Lernen}
+\begin{frame}{\insertsection}{\insertsubsection}
+	\begin{tikzpicture}[
+	roundnode/.style={circle, draw=green!60, fill=green!5, very thick, minimum size=7mm},
+	squarednode/.style={rectangle, draw=red!60, fill=red!5, very thick, minimum size=5mm},
+	]
+	%Nodes
+	\node[roundnode]   (in)                        {\shortstack{bekannte \\ Rohdaten}};
+	\node[squarednode] (dec)    [right=of in]       {KI-Decoder};
+	\node[squarednode] (eq)    [above=of dec] {=};
+	\node[squarednode] (enc) [right=of dec] {\shortstack{KI-Encoder}};	
+	%Lines
+	\draw[->] (dec.east) -- (enc.west);
+	\draw[->] (in.east) --                                             (dec.west);
+	\draw[->] (in.east) .. controls +(right:10mm) and +(left:10mm) .. (eq.west);
+	\draw[->] (enc.east) .. controls +(right:10mm) and +(right:50mm) ..  (eq.east);
+	\draw[->] (eq.south) .. controls +(down:10mm) and +(up:10mm) ..     (enc.north) node[midway,sloped] {\shortstack{update\bigskip}} ;
+	\draw[->] (enc.south) .. controls +(down:15mm) and +(down:15mm) ..     (dec.south) node[midway,sloped] {\shortstack{update\bigskip}} ;
+	\end{tikzpicture}
+\end{frame}
+
+\subsection{Backpropagation}
+\begin{frame}{\insertsection}{\insertsubsection}
+	\begin{tikzpicture}[
+	roundnode/.style={circle, draw=green!60, fill=green!5, very thick, minimum size=7mm},
+	squarednode/.style={rectangle, draw=red!60, fill=red!5, very thick, minimum size=5mm},
+	]
+	%Nodes
+	\node[roundnode]   (in)                        {\shortstack{bekannte \\ Rohdaten}};
+	\node[roundnode]   (label) [above=of in] {\shortstack{erwartete \\ Ausgabe}};
+	\node[squarednode] (l1)    [right=of in]       {L1};
+	\node[squarednode] (l2)    [right=of l1]       {L2};
+	\node[squarednode] (l3)    [right=of l2]       {L3};
+	\node[squarednode] (l4)    [right=of l3]       {L4};
+	\node[squarednode] (eq)    [right=of l4] {$-$};
+
+	%Lines
+	\draw[->] (in.east) -- (l1.west);
+	\draw[->] (l1.east) -- (l2.west);
+	\draw[->] (l2.east) -- (l3.west);
+	\draw[->] (l3.east) -- (l4.west);
+	\draw[->] (l4.east) -- (eq.west);
+	\draw[->] (eq.south) .. controls +(down:10mm) and +(down:10mm) ..     (l4.south) node[midway,sloped] {\shortstack{\vspace{0.5cm} \\ update}} ;
+	\draw[->] (l4.north) .. controls +(up:10mm) and +(up:10mm) ..     (l3.north) node[midway,sloped] {\shortstack{update\bigskip}} ;
+	\draw[->] (l3.south) .. controls +(down:10mm) and +(down:10mm) ..     (l2.south) node[midway,sloped] {\shortstack{\vspace{0.5cm} \\ update}} ;
+	\draw[->] (l2.north) .. controls +(up:10mm) and +(up:10mm) ..     (l1.north) node[midway,sloped] {\shortstack{update\bigskip}} ;
+	\draw[->] (label.east) .. controls +(right:70mm) and +(up:10mm) ..     (eq.north);
+	\end{tikzpicture}
+\end{frame}
+
+\subsection{Neuron}
+\begin{frame}{\insertsection}{\insertsubsection}
+	\begin{tikzpicture}[
+	nonode/.style={circle, fill=green!5, very thick, minimum size=7mm},
+	roundnode/.style={circle, draw=red!60, fill=red!5, very thick, minimum size=11mm},
+	squarednode/.style={rectangle, draw=red!60, fill=red!5, very thick, minimum size=5mm},
+	]
+	%Nodes
+	\node[nonode]    (ina)                                         {a};		
+	\node[nonode]    (inb)    [below=of ina]                       {b};
+	\node[nonode]    (inc)    [below=of inb]                       {c};
+	\node[roundnode] (neuron) [right=of inb]                       {+};
+	\node[nonode]    (out)    [right=of neuron]                    {out};
+	%Lines
+	\draw[->] (ina.east) .. controls +(right:10mm) and +(up:10mm) .. (neuron.north) node[midway,sloped] {\shortstack{$-1$\bigskip}};
+	\draw[->] (inb.east) -- (neuron.west)  node[midway,sloped] {\shortstack{$+2$\bigskip}};
+	\draw[->] (inc.east) .. controls +(right:10mm) and +(down:10mm) .. (neuron.south) node[midway,sloped] {\shortstack{$-1$\bigskip}};	
+	\draw[->] (neuron.east) -- (out.west);
+	\end{tikzpicture}
+\end{frame}
+
+\subsection{Faltungsnetz}
+\begin{frame}{\insertsection}{\insertsubsection}
+	\begin{tikzpicture}[
+	invisiblenode/.style={minimum size=5mm},
+	slidenode/.style={rectangle, draw=blue!60, fill=blue!5, very thick, minimum size=5mm},
+	nonode/.style={circle, fill=green!5, very thick, minimum size=7mm},
+	roundnode/.style={circle, draw=red!60, fill=red!5, very thick, minimum size=11mm},
+	squarednode/.style={rectangle, draw=red!60, fill=red!5, very thick, minimum size=5mm},
+	]
+	%Nodes
+
+
+	\node[slidenode]    (slide1)                {5};
+	\node[slidenode]    (slide2) [right=of slide1]                  {5};	
+	\node[slidenode]    (slide3) [right=of slide2]                  {1};
+	\node[slidenode]    (slide4) [right=of slide3]               {6};	
+	\node[slidenode]    (slide5) [right=of slide4]               {8};	
+	\node[slidenode]    (slide6) [right=of slide5]               {9};
+	\node[roundnode] (neuron) [below=of slide2]                       {+};	\node[invisiblenode]    (arl) [right=of neuron]               {};
+	\node[nonode]    (out)    [below=of neuron]                    {out};		\node[invisiblenode]    (arr) [right=of arl]               {};
+	%Lines
+	\draw[->] (slide3.south) .. controls +(down:10mm) and +(right:10mm) .. (neuron.east) node[midway,sloped] {\shortstack{$-1$\bigskip}};
+	\draw[->] (slide2.south) -- (neuron.north)  node[midway,sloped] {\shortstack{$+2$\bigskip}};
+	\draw[->] (slide1.south) .. controls +(down:10mm) and +(left:10mm) .. (neuron.west) node[midway,sloped] {\shortstack{$-1$\bigskip}};	
+	\draw[->] (neuron.south) -- (out.north);
+	\draw[->,thick] (arl.east) -- (arr.west);
+	\end{tikzpicture}
+\end{frame}
+
+\subsection{Deeplearning}
+\begin{frame}{\insertsection}{\insertsubsection}
+	\begin{tikzpicture}[
+	nonode/.style={circle, fill=green!5, very thick, minimum size=7mm},
+	roundnode/.style={circle, draw=red!60, fill=red!5, very thick, minimum size=11mm},
+	squarednode/.style={rectangle, draw=red!60, fill=red!5, very thick, minimum size=5mm},
+	]
+	%Nodes
+	\node[roundnode]    (ina)                                         {+};		
+	\node[roundnode]    (inb)    [below=of ina]                       {+};
+	\node[roundnode]    (inc)    [below=of inb]                       {+};
+	\node[roundnode] (neuron) [right=of inb]                       {+};
+	\node[nonode]    (out)    [right=of neuron]                    {out};
+	%Lines
+	\draw[->] (ina.east) .. controls +(right:10mm) and +(up:10mm) .. (neuron.north) node[midway,sloped] {\shortstack{$-1$\bigskip}};
+	\draw[->] (inb.east) -- (neuron.west)  node[midway,sloped] {\shortstack{$+2$\bigskip}};
+	\draw[->] (inc.east) .. controls +(right:10mm) and +(down:10mm) .. (neuron.south) node[midway,sloped] {\shortstack{$-1$\bigskip}};	
+	\draw[->] (neuron.east) -- (out.west);
+	\end{tikzpicture}
+\end{frame}
+
+\section{Fragen?}
+\begin{frame}{\insertsection}{\insertsubsection}
+	???
+\end{frame}
+
+\end{document}
+
+
+
+
