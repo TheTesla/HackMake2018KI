@@ -273,14 +273,12 @@ squarednode/.style={rectangle, draw=red!60, fill=red!5, very thick, minimum size
 \begin{frame}{\insertsection}{\insertsubsection}
 	\begin{tikzpicture}[
 	invisiblenode/.style={minimum size=5mm},
-	slidenode/.style={rectangle, draw=blue!60, fill=blue!5, very thick, minimum size=5mm},
+	slidenode/.style={rectangle, draw=blue!60, fill=blue!5, very thick, minimum size=6mm},
 	nonode/.style={circle, fill=green!5, very thick, minimum size=7mm},
 	roundnode/.style={circle, draw=red!60, fill=red!5, very thick, minimum size=11mm},
 	squarednode/.style={rectangle, draw=red!60, fill=red!5, very thick, minimum size=5mm},
 	]
 	%Nodes
-
-
 	\node[slidenode]    (slide1)                {5};
 	\node[slidenode]    (slide2) [right=of slide1]                  {5};	
 	\node[slidenode]    (slide3) [right=of slide2]                  {1};
@@ -297,6 +295,40 @@ squarednode/.style={rectangle, draw=red!60, fill=red!5, very thick, minimum size
 	\draw[->,thick] (arl.east) -- (arr.west);
 	\end{tikzpicture}
 \end{frame}
+
+\begin{frame}{\insertsection}{\insertsubsection}
+	\begin{tikzpicture}[
+	invisiblenode/.style={minimum size=5mm},
+	slidenode/.style={rectangle, draw=blue!60, fill=blue!5, very thick, minimum size=6mm},
+	nonode/.style={circle, fill=green!5, very thick, minimum size=7mm},
+	roundnode/.style={circle, draw=red!60, fill=red!5, very thick, minimum size=11mm},
+	squarednode/.style={rectangle, draw=red!60, fill=red!5, very thick, minimum size=5mm},
+	]
+	%Nodes
+	\node[slidenode]    (slide1)                {5};
+	\node[slidenode]    (slide2) [right=of slide1]                  {5};	
+	\node[slidenode]    (slide3) [right=of slide2]                  {1};
+	\node[slidenode]    (slide4) [right=of slide3]               {6};	
+	\node[slidenode]    (slide5) [right=of slide4]               {8};	
+	\node[slidenode]    (slide6) [right=of slide5]               {9};
+	\node[roundnode] (neuron) [below=of slide2]                       {+};	\node[invisiblenode]    (arl) [right=of neuron]               {};
+	\node[invisiblenode]    (arr) [right=of arl]               {};
+
+	\node[slidenode]    (slide2o) [below=of neuron]                  {-1};
+	\node[slidenode]    (slide1o) [left=of slide2o]               {1};	
+	\node[slidenode]    (slide3o) [right=of slide2o]                  {1};
+	\node[slidenode]    (slide4o) [right=of slide3o]               {0};	
+	\node[slidenode]    (slide5o) [right=of slide4o]               {-3};	
+	\node[slidenode]    (slide6o) [right=of slide5o]               {2};
+	%Lines
+	\draw[->] (slide3.south) .. controls +(down:10mm) and +(right:10mm) .. (neuron.east) node[midway,sloped] {\shortstack{?\bigskip}};
+	\draw[->] (slide2.south) -- (neuron.north)  node[midway,sloped] {\shortstack{?\bigskip}};
+	\draw[->] (slide1.south) .. controls +(down:10mm) and +(left:10mm) .. (neuron.west) node[midway,sloped] {\shortstack{?\bigskip}};	
+	\draw[-] (neuron.south) -- (slide2o.north) node[midway,sloped] {\shortstack{$=$\bigskip}};
+	\draw[->,thick] (arl.east) -- (arr.west);
+	\end{tikzpicture}
+\end{frame}
+
 
 \subsection{Deeplearning}
 \begin{frame}{\insertsection}{\insertsubsection}
@@ -317,6 +349,123 @@ squarednode/.style={rectangle, draw=red!60, fill=red!5, very thick, minimum size
 	\draw[->] (inc.east) .. controls +(right:10mm) and +(down:10mm) .. (neuron.south) node[midway,sloped] {\shortstack{$-1$\bigskip}};	
 	\draw[->] (neuron.east) -- (out.west);
 	\end{tikzpicture}
+\end{frame}
+
+\begin{frame}{\insertsection}{\insertsubsection}
+	\begin{tikzpicture}[
+	invisiblenode/.style={minimum size=5mm},
+	slidenode/.style={rectangle, draw=blue!60, fill=blue!5, very thick, minimum size=6mm},
+	nonode/.style={circle, fill=green!5, very thick, minimum size=7mm},
+	roundnode/.style={circle, draw=red!60, fill=red!5, very thick, minimum size=11mm},
+	squarednode/.style={rectangle, draw=red!60, fill=red!5, very thick, minimum size=5mm},
+	]
+	%Nodes
+	\node[roundnode] (neuron0)                       {+};	
+	\node[slidenode]    (slide2) [below=of neuron0]  {?};	
+	\node[slidenode]    (slide1) [left=of slide2]    {?};
+	\node[slidenode]    (slide3) [right=of slide2]   {?};
+	\node[slidenode]    (slide4) [right=of slide3]   {?};	
+	\node[slidenode]    (slide5) [right=of slide4]   {?};	
+	\node[slidenode]    (slide6) [right=of slide5]   {?};
+	\node[roundnode] (neuron) [below=of slide2]      {+};
+	\node[invisiblenode]    (arl) [right=of neuron]  {};
+	\node[invisiblenode]    (arr) [right=of arl]     {};
+	\node[slidenode]    (slide2o) [below=of neuron]  {-1};
+	\node[slidenode]    (slide1o) [left=of slide2o]  {?};	
+	\node[slidenode]    (slide3o) [right=of slide2o] {?};
+	\node[slidenode]    (slide4o) [right=of slide3o] {?};	
+	\node[slidenode]    (slide5o) [right=of slide4o] {?};	
+	\node[slidenode]    (slide6o) [right=of slide5o] {?};
+	\node[roundnode] (neuron2) [below=of slide2o]    {+};	
+	%Lines
+		\draw[-] (neuron0.south) -- (slide2.north) node[midway,sloped] {\shortstack{$=$\bigskip}};
+	\draw[->] (slide3.south) .. controls +(down:10mm) and +(right:10mm) .. (neuron.east) node[midway,sloped] {\shortstack{?\bigskip}};
+	\draw[->] (slide2.south) -- (neuron.north)  node[midway,sloped] {\shortstack{?\bigskip}};
+	\draw[->] (slide1.south) .. controls +(down:10mm) and +(left:10mm) .. (neuron.west) node[midway,sloped] {\shortstack{?\bigskip}};	
+	\draw[-] (neuron.south) -- (slide2o.north) node[midway,sloped] {\shortstack{$=$\bigskip}};
+	\draw[->,thick] (arl.east) -- (arr.west);
+		\draw[->] (slide3o.south) .. controls +(down:10mm) and +(right:10mm) .. (neuron2.east) node[midway,sloped] {\shortstack{?\bigskip}};
+		\draw[->] (slide2o.south) -- (neuron2.north)  node[midway,sloped] {\shortstack{?\bigskip}};
+		\draw[->] (slide1o.south) .. controls +(down:10mm) and +(left:10mm) .. (neuron2.west) node[midway,sloped] {\shortstack{?\bigskip}};	
+		
+	\end{tikzpicture}
+\end{frame}
+
+\subsection{XOR-Problem}
+\begin{frame}{\insertsection}{\insertsubsection}
+$\begin{array}{cccccc}
+a	& b  & \mathrm{not}(a) & \mathrm{or}(a,b) & \mathrm{and}(a,b)  & \mathrm{xor}(a,b) \\ 
+0	& 0  & 1      & 0 & 0 & 0 \\ 
+0	& 1  & 1      & 1 & 0 & 1 \\ 
+1	& 0  & 0      & 1 & 0 & 1 \\ 
+1	& 1  & 0      & 1 & 1 & 0
+\end{array} $
+\end{frame}
+
+\begin{frame}{\insertsection}{\insertsubsection}
+	$\begin{array}{cccccc}
+	a	& b  & \mathrm{not}(a) & \mathrm{or}(a,b) & \mathrm{and}(a,b)  & \mathrm{xor}(a,b) \\ 
+	0	& 0  & 1      & 0 & 0 & 0 \\ 
+	0	& 1  & 1      & 1 & 0 & 1 \\ 
+	1	& 0  & 0      & 1 & 0 & 1 \\ 
+	1	& 1  & 0      & 1 & 1 & 0
+	\end{array} $
+	$$\mathrm{xor}(a,b) = \mathrm{and}(\mathrm{or}(a,b), \mathrm{not}(\mathrm{and}(a,b))) $$
+	
+	$$\mathrm{xor}(a,b) = \mathrm{or}(a,b) - \mathrm{and}(a,b) $$
+\end{frame}
+
+\begin{frame}{\insertsection}{\insertsubsection}
+
+
+$\mathrm{not}(a) = 1-a$ ; $\mathrm{or}(a,b) = a+b$ ; $\mathrm{and}(a,b) = \frac{a+b}{2}$
+\bigskip
+
+	$\begin{array}{cccccc}
+	a	& b  & \mathrm{not}(a) & \mathrm{or}(a,b) & \mathrm{and}(a,b)  & \mathrm{xor}(a,b) \\ 
+	0	& 0  & 1      & 0 & 0 & 0 \\ 
+	0	& 1  & 1      & 1 & 0,5 & 0,5 \\ 
+	1	& 0  & 0      & 1 & 0,5 & 0,5 \\ 
+	1	& 1  & 0      & 2 & 1 & 1
+	\end{array} $
+
+
+\end{frame}
+
+\begin{frame}{\insertsection}{\insertsubsection}
+	
+	$$\mathrm{xor}(a,b) = \mathrm{and}(\mathrm{or}(a,b), \mathrm{not}(\mathrm{and}(a,b))) $$
+	
+	$$\mathrm{not}(a) = 1-a$$
+	
+	$$\mathrm{or}(a,b) = a+b$$ 
+	$$\mathrm{and}(a,b) = \frac{a+b}{2}$$
+	
+	$$\mathrm{xor}(a,b) = \frac{\left(a + b\right) + \left(- \frac{a+b}{2}\right)}{2} = \frac{a+b}{4}$$
+	
+	
+\end{frame}
+
+\begin{frame}{\insertsection}{\insertsubsection}
+	
+	$$\mathrm{xor}(a,b) = \frac{\left(a + b\right) + \left(- \frac{a+b}{2}\right)}{2} = \frac{a+b}{4}$$	
+	
+	\bigskip
+	
+	$\begin{array}{cccccc}
+	a	& b  & \mathrm{not}(a) & \mathrm{or}(a,b) & \mathrm{and}(a,b)  & \mathrm{xor}(a,b) \\ 
+	0	& 0  & 1      & 0 & 0 & 0 \\ 
+	0	& 1  & 1      & 1 & 0,5 & 0,25 \\ 
+	1	& 0  & 0      & 1 & 0,5 & 0,25 \\ 
+	1	& 1  & 0      & 2 & 1 & 0,5
+	\end{array} $
+	
+\end{frame}
+
+\begin{frame}{\insertsection}{\insertsubsection}
+	
+\textbf{Lösung} -- Aktivierungsfunktion
+	
 \end{frame}
 
 \section{Fragen?}
