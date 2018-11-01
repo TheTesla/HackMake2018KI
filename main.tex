@@ -91,6 +91,7 @@
 % - Keep it simple, no one is interested in your street address.
 
 %\date{24.06.2017}
+\date{3./4. November 2018}
 %\date{13th September 2018}
 % - Either use conference name or its abbreviation.
 % - Not really informative to the audience, more for people (including
@@ -471,6 +472,7 @@ $$\mathrm{not}(a) = 1-a ; \mathrm{or}(a,b) = a+b ; \mathrm{and}(a,b) = \frac{a+b
 \end{frame}
 
 
+\subsection{Aktivierungsfunktion}
 \begin{frame}{\insertsection}{\insertsubsection}
 	
 \textbf{Lösung} -- Aktivierungsfunktion
@@ -482,10 +484,84 @@ $$\mathrm{not}(a) = 1-a ; \mathrm{or}(a,b) = a+b ; \mathrm{and}(a,b) = \frac{a+b
 	  \draw[color=red]    plot (\x,{\x*(sign(\x)+1)/2})             node[right] {\shortstack{\bigskip \\ $f(x) = \begin{cases} x, &\text{if } x > 0 \\ 0 & \end{cases}$}}; 
 
 	  \draw[color=green] plot (\x,{tanh(\x)}) node[right] {$f(x) = \mathrm{tanh}(x)$};
-	  \draw[color=orange] plot (\x,{exp(\x)/(exp(\x)+1)}) node[right] {\shortstack{\bigskip \\ \\ $f(x) = \frac{e^x}{e^x+1}$}};
+	  \draw[color=orange] plot (\x,{1/(exp(-\x)+1)}) node[right] {\shortstack{\bigskip \\ \\ $f(x) = \frac{1}{e^{-x}+1}$}};
 	  \end{tikzpicture}
 	  
 \end{frame}
+
+\begin{frame}{\insertsection}{\insertsubsection}
+	$$\mathrm{xor}(a,b) = \mathrm{tanh}(\mathrm{or}(a,b)) - \mathrm{and}(a,b) $$
+		$$\mathrm{or}(a,b) = a+b$$ 
+		$$\mathrm{and}(a,b) = \frac{a+b}{2}$$
+
+	\bigskip
+	
+	$\begin{array}{ccccccc}
+	a	& b  & \mathrm{not}(a) & \mathrm{tanh}(\mathrm{or}(a,b)) & \mathrm{and}(a,b)  & \mathrm{xor}(a,b) & 4\cdot\mathrm{xor}(a,b) \\ 
+	0	& 0  & 1      & 0 & 0 & 0 & 0 \\ 
+	0	& 1  & 1      & 0,76 & 0,5 & 0,26 & 1,04 \\ 
+	1	& 0  & 0      & 0,76 & 0,5 & 0,26 & 1,04\\ 
+	1	& 1  & 0      & 0,96 & 1 & -0,04 & -0,16
+	\end{array} $
+	
+	
+\end{frame}
+
+\begin{frame}{\insertsection}{\insertsubsection}
+	
+	Aktivierungsfunktion $\tanh(x)$ approximiert andere Funktionen.
+	\begin{tikzpicture}[domain=-2.2:2.2] 
+	\draw[very thin,color=gray] (-2.1,-2.1) grid (2.9,2.9);
+	\draw[->] (-2.2,0) -- (3.2,0) node[right] {$x$}; 
+	\draw[->] (0,-2.2) -- (0,3.2) node[above] {$f(x)$};
+	\draw[domain=-2.1:1,color=blue]   plot (\x,{exp(\x)-1})    node[right] {\shortstack{$f(x) = e^{x}-1$ }}; 
+	\draw[domain=-0.9:2.3,color=red]    plot (\x,{ln(\x+1)})             node[right] {\shortstack{$f(x) = \ln(x+1)$}}; 
+	
+	\draw[color=green] plot (\x,{tanh(\x)}) node[right] {\shortstack{\bigskip \\ $f(x) = \mathrm{tanh}(x)$}};
+		\draw[color=orange] plot (\x,{\x}) node[right] {\shortstack{ $f(x) = x$}};
+
+	\end{tikzpicture}
+	
+\end{frame}
+
+\section{Praxis}
+\subsection{Der Netzwerk-Graph}
+\begin{frame}{\insertsection}{\insertsubsection}
+	
+
+	\begin{tikzpicture}[
+	roundnode/.style={circle, draw=green!60, fill=green!5, very thick, minimum size=7mm},
+	squarednode/.style={rectangle, draw=red!60, fill=red!5, very thick, minimum size=5mm},
+	outernode/.style={rectangle, draw=black, very thick, minimum  width=65mm, minimum height=15mm},
+	funnode/.style={rectangle, draw=black, very thick, minimum  width=15mm, minimum height=10mm},
+	nonode/.style={rectangle,  minimum size=7mm},
+	]
+	%Nodes
+
+	\node[roundnode]   (in)   {in};
+	\node[outernode]  (o)   [right=of in]        {};
+	\node[squarednode] (l1)   [right=of in]        {L1};
+	\node[squarednode] (l2)    [right=of l1]       {L2};
+	\node[squarednode] (l3)    [right=of l2]       {L3};
+	\node[nonode] (l4)    [right=of l3]       {};
+	\node[squarednode] (l4o)    [above=of l4]       {L4};
+	\node[roundnode]   (out)   [right=of l4] {out};
+	\node[funnode]   (f)   [below=of o] {$\mathrm{f}(x)$};
+	
+	%Lines
+	\draw[->] (in.east) -- (l1.west);
+	\draw[->] (l1.east) -- (l2.west);
+	\draw[->] (l2.east) -- (l3.west);
+	\draw[->] (l3.east) -- (l4.west);
+	\draw[->] (l4.east) -- (out.west);
+	\draw[->] (o.south) -- (f.north) node[midway, right] {compile};
+	\draw[->, dashed] (l4o.south) -- (l4.north);
+	\end{tikzpicture}
+
+	
+\end{frame}
+
+
 
 \section{Fragen?}
 \begin{frame}{\insertsection}{\insertsubsection}
