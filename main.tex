@@ -416,9 +416,9 @@ a	& b  & \mathrm{not}(a) & \mathrm{or}(a,b) & \mathrm{and}(a,b)  & \mathrm{xor}(
 \end{frame}
 
 \begin{frame}{\insertsection}{\insertsubsection}
+	$$\mathrm{xor}(a,b) = \mathrm{or}(a,b) - \mathrm{and}(a,b) $$
 
-
-$\mathrm{not}(a) = 1-a$ ; $\mathrm{or}(a,b) = a+b$ ; $\mathrm{and}(a,b) = \frac{a+b}{2}$
+$$\mathrm{not}(a) = 1-a ; \mathrm{or}(a,b) = a+b ; \mathrm{and}(a,b) = \frac{a+b}{2}$$
 \bigskip
 
 	$\begin{array}{cccccc}
@@ -430,6 +430,14 @@ $\mathrm{not}(a) = 1-a$ ; $\mathrm{or}(a,b) = a+b$ ; $\mathrm{and}(a,b) = \frac{
 	\end{array} $
 
 
+\end{frame}
+
+\begin{frame}{\insertsection}{\insertsubsection}
+	
+	$$\mathrm{and}(a,b) = a\cdot b$$
+
+	$\rightarrow$ Nein, das ist nicht linear.
+	
 \end{frame}
 
 \begin{frame}{\insertsection}{\insertsubsection}
@@ -462,10 +470,21 @@ $\mathrm{not}(a) = 1-a$ ; $\mathrm{or}(a,b) = a+b$ ; $\mathrm{and}(a,b) = \frac{
 	
 \end{frame}
 
+
 \begin{frame}{\insertsection}{\insertsubsection}
 	
 \textbf{Lösung} -- Aktivierungsfunktion
-	
+	  \begin{tikzpicture}[domain=-3.2:3.2] 
+	  \draw[very thin,color=gray] (-2.1,-2.1) grid (2.9,2.9);
+	  \draw[->] (-2.2,0) -- (3.2,0) node[right] {$x$}; 
+	  \draw[->] (0,-2.2) -- (0,3.2) node[above] {$f(x)$};
+	  \draw[color=blue]   plot (\x,{\x*(sign(\x)+1.5)/2})    node[right] {\shortstack{$f(x) = \begin{cases} 1,25\cdot x, &\text{if } x > 0 \\ 0,25 \cdot x & \end{cases}$ \bigskip }}; 
+	  \draw[color=red]    plot (\x,{\x*(sign(\x)+1)/2})             node[right] {\shortstack{\bigskip \\ $f(x) = \begin{cases} x, &\text{if } x > 0 \\ 0 & \end{cases}$}}; 
+
+	  \draw[color=green] plot (\x,{tanh(\x)}) node[right] {$f(x) = \mathrm{tanh}(x)$};
+	  \draw[color=orange] plot (\x,{exp(\x)/(exp(\x)+1)}) node[right] {\shortstack{\bigskip \\ \\ $f(x) = \frac{e^x}{e^x+1}$}};
+	  \end{tikzpicture}
+	  
 \end{frame}
 
 \section{Fragen?}
