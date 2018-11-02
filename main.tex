@@ -21,6 +21,8 @@
 \usepackage{ziffer}
 \usepackage{scrextend}
 \usepackage{color, colortbl}
+\usepackage{pgf-pie}
+
 
 % There are many different themes available for Beamer. A comprehensive
 % list with examples is given here:
@@ -649,10 +651,24 @@ $$\mathrm{not}(a) = 1-a ; \mathrm{or}(a,b) = a+b ; \mathrm{and}(a,b) = \frac{a+b
 	\draw[->] (o.south) -- (f.north) node[midway, right] {compile};
 	\draw[->, dashed] (l4o.south) -- (l4.north);
 	\end{tikzpicture}
-
-	
 \end{frame}
 
+\subsection{Aufwand}
+\begin{frame}{\insertsection}{\insertsubsection}
+\begin{tikzpicture}[scale=0.9]
+\pie[
+/tikz/every pin/.style={align=center},
+text=pin,
+rotate=0,
+explode=0.0,
+color={red!70,green!70},
+]
+{
+	80/Datenerverarbeitung,
+	20/KI
+}
+\end{tikzpicture}
+\end{frame}
 
 
 \section{Fragen?}
