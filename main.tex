@@ -268,6 +268,29 @@ squarednode/.style={rectangle, draw=red!60, fill=red!5, very thick, minimum size
 	\draw[->] (inc.east) .. controls +(right:10mm) and +(down:10mm) .. (neuron.south) node[midway,sloped] {\shortstack{$-1$\bigskip}};	
 	\draw[->] (neuron.east) -- (out.west);
 	\end{tikzpicture}
+	
+	Was fehlt noch?
+\end{frame}
+
+\begin{frame}{\insertsection}{\insertsubsection}
+	\begin{tikzpicture}[
+	nonode/.style={circle, fill=green!5, very thick, minimum size=7mm},
+	roundnode/.style={circle, draw=red!60, fill=red!5, very thick, minimum size=11mm},
+	squarednode/.style={rectangle, draw=red!60, fill=red!5, very thick, minimum size=5mm},
+	]
+	%Nodes
+	\node[nonode]    (ina)                                         {a};		
+	\node[nonode]    (inb)    [below=of ina]                       {b};
+	\node[nonode]    (inc)    [below=of inb]                       {c};	\node[nonode]    (c)      [below=of inc]                       {+1};
+	\node[roundnode] (neuron) [right=of inb]                       {+};
+	\node[nonode]    (out)    [right=of neuron]                    {out};
+	%Lines
+	\draw[->] (ina.east) .. controls +(right:10mm) and +(up:10mm) .. (neuron.north) node[midway,sloped] {\shortstack{$-1$\bigskip}};
+	\draw[->] (inb.east) -- (neuron.west)  node[midway,sloped] {\shortstack{$+2$\bigskip}};
+	\draw[->] (inc.east) .. controls +(right:10mm) and +(down:10mm) .. (neuron.south) node[midway,sloped] {\shortstack{$-1$\bigskip}};
+	\draw[->] (c.east) .. controls +(right:10mm) and +(down:10mm) .. (neuron.south) node[midway,sloped] {\shortstack{$0$\bigskip}};	
+	\draw[->] (neuron.east) -- (out.west);
+	\end{tikzpicture}
 \end{frame}
 
 \subsection{Faltungsnetz}
@@ -295,6 +318,52 @@ squarednode/.style={rectangle, draw=red!60, fill=red!5, very thick, minimum size
 	\draw[->] (neuron.south) -- (out.north);
 	\draw[->,thick] (arl.east) -- (arr.west);
 	\end{tikzpicture}
+	
+	Und bei Farbbildern?
+\end{frame}
+
+\begin{frame}{\insertsection}{\insertsubsection}
+	\begin{tikzpicture}[
+	invisiblenode/.style={minimum size=5mm},
+	slidenodeb/.style={rectangle, draw=blue!60, fill=blue!5, very thick, minimum size=6mm},
+	slidenodeg/.style={rectangle, draw=green!60, fill=green!5, very thick, minimum size=6mm},
+	slidenoder/.style={rectangle, draw=red!60, fill=red!5, very thick, minimum size=6mm},
+	nonode/.style={circle, fill=green!5, very thick, minimum size=7mm},
+	roundnode/.style={circle, draw=red!60, fill=red!5, very thick, minimum size=11mm},
+	squarednode/.style={rectangle, draw=red!60, fill=red!5, very thick, minimum size=5mm},
+	]
+	%Nodes
+	\node[slidenodeb]    (slide1b)                {5};
+	\node[slidenodeb]    (slide2b) [below=of slide1b]                  {5};	
+	\node[slidenodeb]    (slide3b) [below=of slide2b]                  {1};
+	\node[slidenodeb]    (slide4b) [below=of slide3b]               {6};	
+	\node[slidenodeg]    (slide1g) [left=of slide1b]               {5};
+	\node[slidenodeg]    (slide2g) [left=of slide2b]                  {5};	
+	\node[slidenodeg]    (slide3g) [left=of slide3b]                  {1};
+	\node[slidenodeg]    (slide4g) [left=of slide4b]               {6};	
+	\node[slidenoder]    (slide1r) [left=of slide1g]               {5};
+	\node[slidenoder]    (slide2r) [left=of slide2g]                  {5};	
+	\node[slidenoder]    (slide3r) [left=of slide3g]                  {1};
+	\node[slidenoder]    (slide4r) [left=of slide4g]               {6};	
+
+	\node[roundnode] (neuron) [right=of slide2b]                       {+};	\node[invisiblenode]    (arl) [below=of neuron]               {};
+	\node[nonode]    (out)    [right=of neuron]                    {out};		\node[invisiblenode]    (arr) [below=of arl]               {};
+	%Lines
+	\draw[->] (slide3b.east) .. controls +(right:10mm) and +(down:10mm) .. (neuron.south) ;
+	\draw[->] (slide3r.north) .. controls +(up:5mm) and +(down:10mm) .. (neuron.south) ;	
+	\draw[->] (slide3g.south) .. controls +(down:10mm) and +(down:20mm) .. (neuron.south) ;	
+
+	\draw[->] (slide2b.east) -- (neuron.west);
+	\draw[->] (slide2r.north) .. controls +(up:5mm) and +(up:3mm) .. (neuron.north) ;	
+	\draw[->] (slide2g.south) .. controls +(down:10mm) and +(down:3mm) .. (neuron.south) ;	
+	\draw[->] (slide1b.east) .. controls +(right:10mm) and +(up:10mm) .. (neuron.north) ;
+	\draw[->] (slide1r.south) .. controls +(down:5mm) and +(up:10mm) .. (neuron.north) ;	
+	\draw[->] (slide1g.north) .. controls +(up:10mm) and +(up:20mm) .. (neuron.north) ;	
+	\draw[->] (neuron.east) -- (out.west);
+	\draw[->,thick] (arl.south) -- (arr.north);
+	\end{tikzpicture}
+	
+
 \end{frame}
 
 \begin{frame}{\insertsection}{\insertsubsection}
@@ -371,7 +440,7 @@ squarednode/.style={rectangle, draw=red!60, fill=red!5, very thick, minimum size
 	\node[roundnode] (neuron) [below=of slide2]      {+};
 	\node[invisiblenode]    (arl) [right=of neuron]  {};
 	\node[invisiblenode]    (arr) [right=of arl]     {};
-	\node[slidenode]    (slide2o) [below=of neuron]  {-1};
+	\node[slidenode]    (slide2o) [below=of neuron]  {?};
 	\node[slidenode]    (slide1o) [left=of slide2o]  {?};	
 	\node[slidenode]    (slide3o) [right=of slide2o] {?};
 	\node[slidenode]    (slide4o) [right=of slide3o] {?};	
@@ -487,6 +556,29 @@ $$\mathrm{not}(a) = 1-a ; \mathrm{or}(a,b) = a+b ; \mathrm{and}(a,b) = \frac{a+b
 	  \draw[color=orange] plot (\x,{1/(exp(-\x)+1)}) node[right] {\shortstack{\bigskip \\ \\ $f(x) = \frac{1}{e^{-x}+1}$}};
 	  \end{tikzpicture}
 	  
+\end{frame}
+
+\begin{frame}{\insertsection}{\insertsubsection}
+	\begin{tikzpicture}[
+	nonode/.style={circle, fill=green!5, very thick, minimum size=7mm},
+	roundnode/.style={circle, draw=red!60, fill=red!5, very thick, minimum size=11mm},
+	squarednode/.style={rectangle, draw=red!60, fill=red!5, very thick, minimum size=5mm},
+	]
+	%Nodes
+	\node[nonode]    (ina)                                         {a};		
+	\node[nonode]    (inb)    [below=of ina]                       {b};
+	\node[nonode]    (inc)    [below=of inb]                       {c};
+	\node[roundnode] (neuron) [right=of inb]                       {+};
+	\node[roundnode] (activation) [right=of neuron]                       {tanh};
+	\node[nonode]    (out)    [right=of activation]                    {out};
+	%Lines
+	\draw[->] (ina.east) .. controls +(right:10mm) and +(up:10mm) .. (neuron.north) node[midway,sloped] {\shortstack{$-1$\bigskip}};
+	\draw[->] (inb.east) -- (neuron.west)  node[midway,sloped] {\shortstack{$+2$\bigskip}};
+	\draw[->] (inc.east) .. controls +(right:10mm) and +(down:10mm) .. (neuron.south) node[midway,sloped] {\shortstack{$-1$\bigskip}};	
+	\draw[->] (activation.east) -- (out.west);
+	\draw[->] (neuron.east) -- (activation.west);
+	\end{tikzpicture}
+	
 \end{frame}
 
 \begin{frame}{\insertsection}{\insertsubsection}
