@@ -22,6 +22,7 @@
 \usepackage{scrextend}
 \usepackage{color, colortbl}
 \usepackage{pgf-pie}
+\usepackage{multicol}
 
 
 % There are many different themes available for Beamer. A comprehensive
@@ -72,7 +73,7 @@
 % A subtitle is optional and this may be deleted
 \subtitle{Methoden und Komponenten am Beispiel der Bildverarbeitung}
 
-\author{Stefan Helmert}
+\author{Stefan Helmert \emph{stefan.helmert@t-online.de}}
 % - Give the names in the same order as the appear in the paper.
 % - Use the \inst{?} command only if the authors have different
 %   affiliation.
@@ -127,7 +128,17 @@
 \end{frame}
 
 \begin{frame}{Inhalt}
-  \tableofcontents
+
+      \begin{columns}[t]
+      	\begin{column}{.6\textwidth}
+      		\tableofcontents[sections={1-2}]
+      	\end{column}
+      	\begin{column}{.4\textwidth}
+      		\tableofcontents[sections={3-4}]
+      	\end{column}
+      \end{columns}
+      	
+
   % You might wish to add the option [pausesections]
 \end{frame}
 
@@ -731,8 +742,7 @@ color={red!70,green!70},
 \begin{description}
 	\item[Google] Tensorflow
 	\item[Microsoft] CNTK
-	\item[Montreal Institute for Learning Algorithms (MILA), University of Montreal] Theano
-	\item[]
+	\item[MILA, Univ. Montreal] Theano
 \end{description}
 \end{frame}
 
